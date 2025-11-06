@@ -1,0 +1,27 @@
+version: '3.1'
+services:
+  db:
+    image: rohitkalyan18/dockersample-wordsmith:db
+    ports:
+    - 5432:5432
+    environment:
+    - POSTGRES_USER=postgres
+    - POSTGRES_DB=postgres
+    - POSTGRES_PASSWORD=12345
+    volumes:
+    - new-wordsmith://var/lib/PostgreSQL/data
+  api:
+    image: rohitkalyan18/dockersample-wordsmith:api
+    ports:
+    - 8080:8080
+    depends_on:
+    - db
+  web:
+    image: rohitkalyan18/dockersample-wordsmith:web
+    ports:
+    - 9090:80
+    depends_on:
+    - db
+    - api
+volumes:
+  new-wordsmith:
